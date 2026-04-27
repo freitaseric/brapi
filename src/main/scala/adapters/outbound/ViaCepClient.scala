@@ -30,7 +30,7 @@ class ViaCepClient(backend: WebSocketBackend[Future]) extends CepProvider:
               BrCep(
                 d.cep.filter(_.isDigit),
                 d.logradouro, d.bairro, d.localidade, d.uf,
-                details
+                details, "ViaCEP"
               )
             )
           case Left(_) => Future.failed(new Exception(s"ViaCEP não encontrou o CEP: $cep"))

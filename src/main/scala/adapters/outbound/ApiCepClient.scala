@@ -30,7 +30,7 @@ class ApiCepClient(backend: WebSocketBackend[Future]) extends CepProvider {
               BrCep(
                 d.code.filter(_.isDigit),
                 d.address, d.district, d.city, d.state,
-                details
+                details, "ApiCEP"
               )
             )
           case Left(_) => Future.failed(new Exception(s"ApiCep não encontrou o CEP: $cep"))

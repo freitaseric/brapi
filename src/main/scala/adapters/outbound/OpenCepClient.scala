@@ -24,7 +24,7 @@ class OpenCepClient(backend: WebSocketBackend[Future]) extends CepProvider:
             BrCep(
               d.cep.filter(_.isDigit),
               d.logradouro, d.bairro, d.localidade, d.uf,
-              details
+              details, "OpenCEP"
             )
           )
 
