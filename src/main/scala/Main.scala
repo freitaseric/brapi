@@ -1,5 +1,5 @@
 import adapters.inbound.CepEndpoint
-import adapters.outbound.ViaCepClient
+import adapters.outbound.{ApiCepClient, OpenCepClient, ViaCepClient}
 import domain.cep.CepService
 import org.slf4j.LoggerFactory
 import sttp.client4.httpclient.HttpClientFutureBackend
@@ -15,15 +15,17 @@ import scala.concurrent.{Await, Future, Promise}
 
   val backend = HttpClientFutureBackend()
 
+  val openCep = OpenCepClient(backend)
   val viaCep = ViaCepClient(backend)
+  val apiCep = ApiCepClient(backend)
 
-  val cepService = CepService(List(viaCep))
+  val cepService = CepService(List(openCep, viaCep, apiCep))
 
   val cepEndpoint = CepEndpoint(cepService)
 
   val swaggerEndpoints = SwaggerInterpreter().fromServerEndpoints[Future](List(cepEndpoint.route), "brApi", "0.1.0-SNAPSHOT")
 
-  val port = sys.env.getOrElse("PORT", "8080").toInt
+  val port = sys.env.get("PORT").flatMap(_.toIntOption).getOrElse(8080)
   Await.result(NettyFutureServer().port(port).host("0.0.0.0").addEndpoints(List(cepEndpoint.route) ++ swaggerEndpoints).start(), Duration.Inf)
   logger.info(s"🚀 brApi running at http://localhost:$port/api")
 

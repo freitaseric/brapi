@@ -17,7 +17,7 @@
 - [x] Simple directory organization (design pattern: ports and adapters).
 - [x] Basic documentation via Swagger UI (auto-generated).
 - [x] Minimal interface to search for a CEP with normalized structure.
-- [ ] Concurrent data fetching from multiple providers (Scatter-Gather pattern) for resilient responses.
+- [x] Concurrent data fetching from multiple providers (Scatter-Gather pattern) for resilient responses.
 
 ## Future ideas
 

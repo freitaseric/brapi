@@ -5,7 +5,14 @@ import io.circe.syntax.*
 
 class BrCepSuite extends munit.FunSuite {
 
-  private val sample = BrCep("01310100", "Avenida Paulista", "Bela Vista", "São Paulo", "SP")
+  private val sample = BrCep(
+    "01310100", "Avenida Paulista", "Bela Vista", "São Paulo", "SP",
+    BrCepDetailed(
+      "Avenida Paulista", Some("de 612 a 1510 - lado par"),
+      Some(""), "Bela Vista", "São Paulo", "SP",
+      Some("São Paulo"), Some("Sudeste"), Some("3550308")
+    )
+  )
 
   test("encodes to JSON with expected fields") {
     val json = sample.asJson
